@@ -4,7 +4,8 @@ window.addEventListener('load', function(){
     
     const WIDTH = game.width = 500;
     const HEIGHT = game.height = 500;
-    const NO_FRUITS = 3;
+    const FRUIT_WIDTH = 80;
+    const FRUIT_HEIGHT = 80;
     const MAX_FRUIT = 5;
     const SPEED = 2;
 
@@ -25,14 +26,12 @@ window.addEventListener('load', function(){
         constructor(x, y){
             this.x = x;
             this.y = y;
-            this.width = 60;
-            this.height = 60;
         }
         update(){
             this.x += SPEED;
         }
         draw(){
-            ctx.drawImage(appleImg, this.x, this.y, this.width, this.height);
+            ctx.drawImage(appleImg, this.x, this.y, FRUIT_WIDTH, FRUIT_HEIGHT);
         }
     }
     
@@ -40,19 +39,6 @@ window.addEventListener('load', function(){
         ctx.drawImage(background, 0, 0);
     }
 
-    const apple = new Apple(0, 0);
-    let angle = 0;
-
-    function move(){
-        drawBackground();
-        apple.update();
-        ctx.save();
-        apple.draw();
-        angle += 2 * Math.PI / 180;
-        requestAnimationFrame(move);
-    }
-
-    
     let counter = 0;
     const RESP = 10000;
     let current = []
@@ -62,17 +48,13 @@ window.addEventListener('load', function(){
         
         const x = event.clientX;
         const y = event.clientY;
-        console.log(x);
-        console.log(y);
         
         for(let i = 0; i < current.length; i++){
             const objX = current[i].x;
             const objY = current[i].y;
-            const width = current[i].width;
-            const height = current[i].height;
-            if(x >= objX && x <= (objX + width) && y >= objY && y <= (objY + height)){
+            if(x >= objX && x <= (objX + FRUIT_WIDTH) && y >= objY && y <= (objY + FRUIT_HEIGHT)){
                 current = removeElementX(i, current);
-                console.log("i" + i);
+                counter--;
             }
         }
     };
@@ -90,7 +72,7 @@ window.addEventListener('load', function(){
                 gera = true;
             }
             if(counter < MAX_FRUIT && gera){
-                const obj = new Apple(0,y);
+                const obj = new Apple(-FRUIT_WIDTH,y);
                 y += 60;
                 current.push(obj);
                 counter += 1;

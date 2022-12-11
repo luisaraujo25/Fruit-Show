@@ -7,12 +7,9 @@ function removeElementX(index, list){
         i++;
     }
     list.shift();
-    console.log("half1: " + newList);
     for(let i = 0; i < list.length; i++){
-        console.log(list[i])
         newList.push(list[i]);
     }
-    console.log(newList);
     return newList;
 }
 
