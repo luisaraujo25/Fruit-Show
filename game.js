@@ -7,6 +7,9 @@ window.addEventListener('load', function(){
     const NO_FRUITS = 3;
     const MAX_FRUIT = 5;
     const SPEED = 2;
+
+    // delay -> milliseconds .. 1000 miliseconds / 25 <- frame
+    // 40 milliseconds (0,040s) .. new fruit every 300 milliseconds (0,3s) to 3000 milliseconds (3s)
     const FPS = 1000 / 25;
 
     const ctx = game.getContext("2d");
@@ -60,7 +63,7 @@ window.addEventListener('load', function(){
         const y = event.clientY;
         console.log(x);
         console.log(y);
-
+        
         for(let i = 0; i < current.length; i++){
             const objX = current[i].x;
             const objY = current[i].y;
@@ -73,15 +76,24 @@ window.addEventListener('load', function(){
         }
     };
     
+    let generate = 0;
+    let gera = true;
     function start(){
         setInterval(function(){
-
             drawBackground();
-            if(counter < MAX_FRUIT){
+            if(generate < 75){
+                generate++;
+            }
+            else{
+                generate = 0;
+                gera = true;
+            }
+            if(counter < MAX_FRUIT && gera){
                 const obj = new Apple(0,y);
                 y += 60;
                 current.push(obj);
                 counter += 1;
+                gera = false;
             }
             
             game.addEventListener("click", clickHandler);
