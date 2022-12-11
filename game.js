@@ -1,45 +1,41 @@
-const game = document.getElementById("game");
+window.addEventListener('load', function(){
 
-const WIDTH = game.width = 500;
-const HEIGHT = game.height = 500;
-const NO_FRUITS = 3;
-
-const ctx = game.getContext("2d");
-
-const background = new Image();
-background.src = "sky_background.png";
-let fruitList = []
-for(let i = 1; i <= NO_FRUITS; i++){
-    let fruit = new Image();
-    fruit.src = "fruit" + String(i) + ".png";
-    fruitList.push(fruit);
-}
-console.log(fruitList)
-
-function drawBackground(){
-    ctx.drawImage(background, 0, 0);
-}
-
-class Fruit{
-    constructor(ctx){
-        this.height = 80;
-        this.width = 80;
-        this.ctx = ctx;
-        this.index = Math.floor(Math.random() * NO_FRUITS);
+    const game = document.getElementById("game");
+    
+    const WIDTH = game.width = 500;
+    const HEIGHT = game.height = 500;
+    const NO_FRUITS = 3;
+    const MAX_FRUIT = 5;
+    
+    const ctx = game.getContext("2d");
+    
+    
+    const background = new Image();
+    background.src = "sky_background.png";
+    
+    let fruitList = []
+    for(let i = 0; i < NO_FRUITS; i++){
+        let fruitImg = new Image();
+        fruitImg.src = "fruit" + String(i + 1) + ".png";
+        fruitList.push(fruitImg);
     }
 
-    draw(x, y){
-        this.ctx.drawImage(fruitList[this.index], x, y, 70, 70);
+    let x = 0
+    let y = 0
+    const orange = new Image();
+    orange.src = "fruit2.png";
+    
+    function drawBackground(){
+        ctx.drawImage(background, 0, 0);
     }
-}
-
-
-function gamePlay(){
-
-    let gameOver = false
-    const start = document.getElementById("start");
-    start.style.visibility = 'hidden';
-    drawBackground();
-    const fruit = new Fruit(ctx);
-    fruit.draw(0,0);
-}
+    function drawOrange(x,y){
+        ctx.drawImage(orange, x, y, 60, 60);
+    }
+    function move(){
+        drawBackground();
+        x += 2;
+        drawOrange(x, y);
+        requestAnimationFrame(move);
+    }
+    move();
+});
