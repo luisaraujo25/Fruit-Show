@@ -79,12 +79,11 @@ window.addEventListener('load', function(){
             const objX = current[i].x;
             const objY = current[i].y;
             if(objX > SCREEN_WIDTH){
-                console.log(outOfScreen)
+                current.shift();
                 outOfScreen++;
             }
         }
         if(outOfScreen == MAX_OUT){
-            console.log(outOfScreen)
             gameOver();
         }
         
