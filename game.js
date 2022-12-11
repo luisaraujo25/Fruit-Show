@@ -1,27 +1,39 @@
 window.addEventListener('load', function(){
-
-    const game = document.getElementById("game");
     
-    const WIDTH = game.width = 500;
-    const HEIGHT = game.height = 500;
+    const div = document.getElementById("canvas");
+    const game = document.createElement("canvas");
+    div.appendChild(game);
+
+    const SCREEN_WIDTH = game.width = 500;
+    const SCREEN_HEIGHT = game.height = 500;
     const FRUIT_WIDTH = 80;
     const FRUIT_HEIGHT = 80;
     const MAX_FRUIT = 5;
-    const SPEED = 2;
-
+    const SPEED = 5;
+    const MAX_OUT = 5;
+    
     // delay -> milliseconds .. 1000 miliseconds / 25 <- frame
     // 40 milliseconds (0,040s) .. new fruit every 300 milliseconds (0,3s) to 3000 milliseconds (3s)
     const FPS = 1000 / 25;
     const SPAN = 25;
-
+    
     const ctx = game.getContext("2d");
     
     const background = new Image();
     background.src = "sky_background.png";
-
+    
     const appleImg = new Image();
     appleImg.src = "apple.png";
     
+    // count how many fruits are on screen
+    let counter = 0;
+    let current = []
+    let y = 0;
+    let generateTime = 0;
+    let generate = true;
+    let outOfScreen = 0;
+    let interval;
+
     class Apple{
         constructor(x, y){
             this.x = x;
@@ -39,10 +51,6 @@ window.addEventListener('load', function(){
         ctx.drawImage(background, 0, 0);
     }
 
-    let counter = 0;
-    const RESP = 10000;
-    let current = []
-    let y = 0;
 
     function clickHandler(event){
         
@@ -57,27 +65,49 @@ window.addEventListener('load', function(){
                 counter--;
             }
         }
-    };
+    }
+
+    function gameOver(){
+        game.style.visibility = 'hidden';
+        div.removeChild(game);
+        clearInterval(interval);
+        div.innerText = "OVER";
+    }
+
+    function checkStatus(){
+        for(let i = 0; i < current.length; i++){
+            const objX = current[i].x;
+            const objY = current[i].y;
+            if(objX > SCREEN_WIDTH){
+                console.log(outOfScreen)
+                outOfScreen++;
+            }
+        }
+        if(outOfScreen == MAX_OUT){
+            console.log(outOfScreen)
+            gameOver();
+        }
+        
+    }
     
-    let generate = 0;
-    let gera = true;
     function start(){
-        setInterval(function(){
+        interval = setInterval(function(){
             drawBackground();
-            if(generate < SPAN){
-                generate++;
+            if(generateTime < SPAN){
+                generateTime++;
             }
             else{
-                generate = 0;
-                gera = true;
+                generateTime = 0;
+                generate = true;
             }
-            if(counter < MAX_FRUIT && gera){
+            if(counter < MAX_FRUIT && generate){
                 const obj = new Apple(-FRUIT_WIDTH,y);
                 y += 60;
                 current.push(obj);
                 counter += 1;
-                gera = false;
+                generate = false;
             }
+            checkStatus();
             
             game.addEventListener("click", clickHandler);
             // Draw all current fruits in action
