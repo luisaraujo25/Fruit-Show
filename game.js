@@ -10,7 +10,7 @@ window.addEventListener('load', function(){
     const FRUIT_HEIGHT = 80;
     const MAX_FRUIT = 5;
     const SPEED = 5;
-    const MAX_OUT = 5;
+    const MAX_OUT = 2;
     
     // delay -> milliseconds .. 1000 miliseconds / 25 <- frame
     // 40 milliseconds (0,040s) .. new fruit every 300 milliseconds (0,3s) to 3000 milliseconds (3s)
@@ -24,7 +24,15 @@ window.addEventListener('load', function(){
     
     const appleImg = new Image();
     appleImg.src = "apple.png";
+
+    const peachImg = new Image();
+    peachImg.src = "peach.png";
+
+    const orangeImg = new Image();
+    orangeImg.src = "orange.png";
     
+    const allFruits = [appleImg, peachImg, orangeImg]
+
     // count how many fruits are on screen
     let counter = 0;
     let current = []
@@ -34,23 +42,24 @@ window.addEventListener('load', function(){
     let outOfScreen = 0;
     let interval;
 
-    class Apple{
+    class Fruit{
         constructor(x, y){
             this.x = x;
             this.y = y;
+            const index = Math.floor(Math.random() * allFruits.length);
+            this.img = allFruits[index];
         }
         update(){
             this.x += SPEED;
         }
         draw(){
-            ctx.drawImage(appleImg, this.x, this.y, FRUIT_WIDTH, FRUIT_HEIGHT);
+            ctx.drawImage(this.img, this.x, this.y, FRUIT_WIDTH, FRUIT_HEIGHT);
         }
     }
-    
+
     function drawBackground(){
         ctx.drawImage(background, 0, 0);
     }
-
 
     function clickHandler(event){
         
@@ -100,7 +109,7 @@ window.addEventListener('load', function(){
                 generate = true;
             }
             if(counter < MAX_FRUIT && generate){
-                const obj = new Apple(-FRUIT_WIDTH,y);
+                const obj = new Fruit(-FRUIT_WIDTH,y);
                 y += 60;
                 current.push(obj);
                 counter += 1;
