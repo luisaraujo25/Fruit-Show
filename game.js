@@ -10,7 +10,6 @@ window.addEventListener('load', function(){
 
     const ctx = game.getContext("2d");
     
-    
     const background = new Image();
     background.src = "sky_background.png";
 
@@ -28,7 +27,6 @@ window.addEventListener('load', function(){
             this.x += SPEED;
         }
         draw(){
-            console.log(this.index);
             ctx.drawImage(appleImg, this.x, this.y, this.width, this.height);
         }
     }
@@ -38,12 +36,14 @@ window.addEventListener('load', function(){
     }
 
     const apple = new Apple(0, 0);
-
+    let angle = 0;
 
     function move(){
         drawBackground();
         apple.update();
+        ctx.save();
         apple.draw();
+        angle += 2 * Math.PI / 180;
         requestAnimationFrame(move);
     }
     move();
