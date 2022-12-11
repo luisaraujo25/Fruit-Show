@@ -11,6 +11,7 @@ window.addEventListener('load', function(){
     // delay -> milliseconds .. 1000 miliseconds / 25 <- frame
     // 40 milliseconds (0,040s) .. new fruit every 300 milliseconds (0,3s) to 3000 milliseconds (3s)
     const FPS = 1000 / 25;
+    const SPAN = 25;
 
     const ctx = game.getContext("2d");
     
@@ -70,8 +71,8 @@ window.addEventListener('load', function(){
             const width = current[i].width;
             const height = current[i].height;
             if(x >= objX && x <= (objX + width) && y >= objY && y <= (objY + height)){
-                current.pop();
-                console.log("oiii");
+                current = removeElementX(i, current);
+                console.log("i" + i);
             }
         }
     };
@@ -81,7 +82,7 @@ window.addEventListener('load', function(){
     function start(){
         setInterval(function(){
             drawBackground();
-            if(generate < 75){
+            if(generate < SPAN){
                 generate++;
             }
             else{
