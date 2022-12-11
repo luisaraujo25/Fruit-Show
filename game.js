@@ -23,16 +23,16 @@ window.addEventListener('load', function(){
     const ctx = game.getContext("2d");
     
     const background = new Image();
-    background.src = "sky_background.png";
+    background.src = "imgs/sky_background.png";
     
     const appleImg = new Image();
-    appleImg.src = "apple.png";
+    appleImg.src = "imgs/apple.png";
     
     const peachImg = new Image();
-    peachImg.src = "peach.png";
+    peachImg.src = "imgs/peach.png";
     
     const orangeImg = new Image();
-    orangeImg.src = "orange.png";
+    orangeImg.src = "imgs/orange.png";
     
     const allFruits = [appleImg, peachImg, orangeImg]
     
