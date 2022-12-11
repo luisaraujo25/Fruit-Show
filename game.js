@@ -62,6 +62,8 @@ window.addEventListener('load', function(){
 
     function drawBackground(){
         ctx.drawImage(background, 0, 0);
+        ctx.font = "50px serif";
+        ctx.fillText(outOfScreen, SCREEN_WIDTH - 50, 50);
     }
 
     function clickHandler(event){
@@ -94,14 +96,12 @@ window.addEventListener('load', function(){
             const objX = current[i].x;
             if(objX > SCREEN_WIDTH){
                 current.shift();
-                console.log("um")
                 outOfScreen++;
             }
         }
         if(outOfScreen == MAX_OUT){
             gameOver();
         }
-        
     }
     
     function start(){
