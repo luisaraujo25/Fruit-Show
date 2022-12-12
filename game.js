@@ -97,6 +97,7 @@ window.addEventListener('load', function(){
             if(objX > SCREEN_WIDTH){
                 current.shift();
                 outOfScreen++;
+                counter--;
             }
         }
         if(outOfScreen == MAX_OUT){
@@ -120,7 +121,7 @@ window.addEventListener('load', function(){
                 const speed = Math.floor(SPEED_MIN + Math.random() * (SPEED_MAX + 1));
                 const obj = new Fruit(-FRUIT_WIDTH, y, speed);
                 current.push(obj);
-                counter += 1;
+                counter++;
                 generate = false;
             }
             checkStatus();
